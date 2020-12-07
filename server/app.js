@@ -17,7 +17,9 @@ const Users = require("./models/usersModel");
 const Vacation = require("./models/vacationsModel");
 const Follows = require("./models/followsModel");
 
-app.use(express.static(path.join(__dirname, "uploads")));
+//app.use(express.static(path.join(__dirname, "uploads")));
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 app.use(
   bodyParser.urlencoded({

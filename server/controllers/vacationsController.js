@@ -38,14 +38,6 @@ exports.getAllVacations = async (req, res) => {
     .then((result) => {
       follows = result;
       follows.map((follow) => {
-        console.log(
-          "🚀 ~ file: vacationsController.js ~ line 40 ~ .then ~ result",
-          result
-        );
-        console.log(
-          "🚀 ~ file: vacationsController.js ~ line 40 ~ .then ~ result",
-          result
-        );
         let index = vacations.findIndex(
           (vacation) => vacation.id === follow.vacationId
         );

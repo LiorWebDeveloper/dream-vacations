@@ -3,6 +3,7 @@ import "../login.css";
 import { connect } from "react-redux";
 import Axios from "axios";
 import { Redirect } from "react-router-dom";
+import Settings from "../functions/settings";
 
 class Login extends Component {
   newUserObj = {};
@@ -49,7 +50,7 @@ class Login extends Component {
     }
 
     try {
-      await Axios.post(`http://localhost:4000/users/getUserByMail`, obj).then(
+      await Axios.post(`${Settings.GlobalURL}users/getUserByMail`, obj).then(
         (response) => {
           if (response.data != "incorrect") {
             this.props.updateLogInUsers(response.data);
@@ -91,7 +92,7 @@ class Login extends Component {
     ) {
       try {
         await Axios.post(
-          `http://localhost:4000/users/insertUser`,
+          `${Settings.GlobalURL}users/insertUser`,
           this.newUserObj
         ).then((response) => {
           if (response.data != "mailExists") {
@@ -126,8 +127,8 @@ class Login extends Component {
     const direction = () => {
       if (this.props.loggedInUser != null) {
         if (this.props.loggedInUser.role == 1) {
-          this.props.setIsAdmin(true);
-          pageDirection = <Redirect to="/admin" />;
+          /*           this.props.setIsAdmin(true);
+           */ pageDirection = <Redirect to="/admin" />;
         } else if (this.props.loggedInUser.role == 0) {
           pageDirection = <Redirect to="/user" />;
         }
@@ -286,12 +287,13 @@ const mapDispatchToProps = (dispatch) => {
       });
     },
 
-    setIsAdmin(value) {
+    /*     setIsAdmin(value) {
       dispatch({
         type: "setIfIsAdmin",
         payload: value,
       });
     },
+ */
   };
 };
 

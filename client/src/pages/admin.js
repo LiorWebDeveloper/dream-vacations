@@ -19,12 +19,6 @@ class Admin extends Component {
     this.socket.on("edit vacation", (vacations) => {
       this.props.SetVacation(vacations);
     });
-    this.getAllVacation();
-  };
-
-  getAllVacation = async () => {
-    let vacation = await Api.getAllVacation(this.logInUserId);
-    this.props.SetVacation(vacation);
   };
 
   /* this fun move to addVacationModal for close the modal */

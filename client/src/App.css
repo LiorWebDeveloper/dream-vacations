@@ -1,176 +1,166 @@
 * {
-    font-size: 28px;
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    margin-top: 1px;
-    padding: 0;
-    box-sizing: border-box;
+  font-size: 28px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  margin-top: 1px;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 
 /* from here below it is for header.js components  */
 
 #headerWrapper {
-    background-color: rgb(2, 40, 81);
+  background-color: rgb(2, 40, 81);
 }
 
 #logo {
-    height: 100px;
-    border: rgb(2, 40, 81) 1px solid;
+  height: 100px;
+  border: rgb(2, 40, 81) 1px solid;
 }
 
 #hedaerText {
-    color: rgb(255, 125, 45);
+  color: rgb(255, 125, 45);
 }
 
 #hedaerText h1 {
-    font-size: 1.3rem;
-    font-family: Candara;
+  font-size: 1.3rem;
+  font-family: Candara;
 }
 
 #hedaerText h2 {
-    font-size: 0.8rem;
-    font-family: Monaco;
+  font-size: 0.8rem;
+  font-family: Monaco;
 }
 
 #userName {
-    font-size: 0.6rem;
-    color: rgb(255, 125, 45);
-    text-decoration: none;
+  font-size: 0.6rem;
+  color: rgb(255, 125, 45);
+  text-decoration: none;
 }
 
 #userNameText {
-    color: rgb(255, 125, 45);
-    font-size: 0.6rem;
-    text-decoration: none;
+  color: rgb(255, 125, 45);
+  font-size: 0.6rem;
+  text-decoration: none;
 }
 
 #logoutLink {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 #userName i {
-    font-size: 0.5rem;
+  font-size: 0.5rem;
 }
-
 
 /* from here below it is admin.js components */
 
 #adminWarrper {
-    width: 90%;
-    margin-left: 5%;
-    background-color: white;
+  width: 90%;
+  margin-left: 5%;
+  background-color: white;
 }
 
 #adminTitle {
-    font-size: 1.1rem;
-    font-family: Impact;
-    color: rgba(14, 58, 104, 0.938);
+  font-size: 1.1rem;
+  font-family: Impact;
+  color: rgba(14, 58, 104, 0.938);
 }
 
 #followLink {
-    font-size: 0.8rem;
-    width: 50%;
-    margin-left: 25%;
+  font-size: 0.8rem;
+  width: 50%;
+  margin-left: 25%;
 }
 
 #addVactionButton {
-    width: 50%;
-    margin-left: 25%;
-    background-color: #a39d9da1;
-    font-size: 0.8rem;
+  width: 50%;
+  margin-left: 25%;
+  background-color: #a39d9da1;
+  font-size: 0.8rem;
 }
 
 .missingData {
-    font-size: 0.7rem;
-    color: red !important;
-    font-weight: 600;
-    text-align: center;
+  font-size: 0.7rem;
+  color: red !important;
+  font-weight: 600;
+  text-align: center;
 }
-
 
 /* from here below it is vacationCard.js components */
 
 .vacationCard {
-    margin-left: 8%;
-    width: 40%;
-    background-color: #a39d9da1;
+  background-color: #a39d9da1;
 }
 
 .vacationCard:nth-child(2n + 2) {
-    margin-left: 4%;
-    margin-right: 8%;
-    float: right;
+  margin-left: 4%;
+  margin-right: 8%;
+  float: right;
 }
 
 .cardTitle {
-    font-size: 1.1rem;
-    font-weight: 800;
-    padding-top: 1px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  padding-top: 1px;
 }
 
 .imageCard {
-    margin-left: 20%;
-    width: 300px;
+  margin-left: 2.5%;
+  width: 95%;
+  height: 250px;
+  border: 1px rgb(2, 40, 81) solid;
+  border-radius: 5px;
 }
 
 .userTools {
-    margin-right: 1px;
-    position: relative;
-    float: right;
+  margin-right: 1px;
+  position: relative;
+  float: right;
 }
 
 .userTools .btn {
-    padding-bottom: 1px;
-    position: absolute;
-    top: 0px;
-    right: 0px;
+  padding-bottom: 1px;
+  position: absolute;
+  top: 0px;
+  right: 0px;
 }
 
 .checkboxBtn {
-    opacity: 0.5;
-    position: absolute;
-    top: 37%;
-    right: 0px;
-    text-decoration: none;
+  opacity: 0;
+  position: absolute;
+  top: 37%;
+  right: 0px;
+  text-decoration: none;
 }
-
-.followOn {
-    color: red;
-    font-weight: bold !important;
-}
-
 
 /* from here below it is for login.js components */
 
 #emailHelp {
-    font-size: 0.5rem;
-    color: red !important;
+  font-size: 0.5rem;
+  color: red !important;
 }
 
 #formERR {
-    font-size: 0.7rem;
-    color: red !important;
-    text-align: center;
-    font-weight: bold;
+  font-size: 0.7rem;
+  color: red !important;
+  text-align: center;
+  font-weight: bold;
 }
-
 
 /* from here below it is for followsGraph.js components */
 
 #chartWrapper {
-    width: 90%;
-    margin-left: 5%;
+  width: 90%;
+  margin-left: 5%;
 }
-
 
 /* from here below it is for footer.js components */
 
 #footerWrapper {
-    background-color: rgb(2, 40, 81);
-    color: rgb(255, 125, 45);
+  background-color: rgb(2, 40, 81);
+  color: rgb(255, 125, 45);
 }
 
 #footerWrapper span {
-    font-size: 0.6rem;
+  font-size: 0.6rem;
 }

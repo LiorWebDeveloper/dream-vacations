@@ -7,7 +7,6 @@ import socketIOClient from "socket.io-client";
 import Settings from "../functions/settings";
 
 class UserPage extends Component {
-  logInUserId = 0;
   socket;
 
   componentDidMount = () => {
@@ -22,7 +21,6 @@ class UserPage extends Component {
   getLoacalStorage = () => {
     let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
     if (userFromLoaclStorah != null) {
-      this.logInUserId = userFromLoaclStorah.id;
       this.props.updateLogInUsers(userFromLoaclStorah);
     }
   };

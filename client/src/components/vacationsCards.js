@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Axios from "axios";
 import EditVacationModal from "./editVacationModal";
 import * as Api from "../functions/api";
 import Settings from "../functions/settings";
@@ -9,16 +8,27 @@ import socketIOClient from "socket.io-client";
 class VacationsCards extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       drowEdit: "",
-      followIcon: <i className="far fa-star"> </i>,
+      followIcon: <i id={this.props.vacations.id} className="far fa-star"></i>,
+      userId: null,
     };
   }
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.socket = socketIOClient(Settings.soketUrl);
-    this.getAllVacation();
+    await this.getLoacalStorage();
+    this.getAllVacation(this.state.userId);
+  };
+
+  getLoacalStorage = () => {
+    let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
+    if (userFromLoaclStorah != null) {
+      this.setState({
+        userId: userFromLoaclStorah.id,
+      });
+      this.props.updateLogInUsers(userFromLoaclStorah);
+    }
   };
 
   /* this fun is for send data to soket chanel after change */
@@ -27,8 +37,8 @@ class VacationsCards extends Component {
   };
 
   /* this fun get all vacations from server and update the reducer */
-  getAllVacation = async () => {
-    let vacation = await Api.getAllVacation(this.logInUserId);
+  getAllVacation = async (userId) => {
+    let vacation = await Api.getAllVacation(userId);
     this.sendSocket(vacation);
     this.props.SetVacation(vacation);
   };
@@ -66,13 +76,15 @@ class VacationsCards extends Component {
   };
 
   followOrNot = (e) => {
-    let btn = document.getElementById("btn" + e.target.id);
+    let btn = document.getElementById("i-" + e.target.id);
     if (e.target.checked == true) {
       this.addVacationToFollow(e.target.id);
-      btn.classList.add("followOn");
+      btn.classList.remove("far");
+      btn.classList.add("fas");
     } else {
       this.deleteVacationToFollow(e.target.id);
-      btn.classList.remove("followOn");
+      btn.classList.remove("fas");
+      btn.classList.add("far");
     }
   };
 
@@ -91,7 +103,7 @@ class VacationsCards extends Component {
     let tools = "";
     let deleteIcon = <i className="fas fa-trash-alt"> </i>;
     let editIcon = <i className="fas fa-edit"> </i>;
-
+    console.log(this.props.vacations);
     let drowCard = this.props.vacations.map((vacation, i) => {
       if (this.props.loggedInUser != null) {
         if (this.props.loggedInUser.role == 1) {
@@ -115,39 +127,38 @@ class VacationsCards extends Component {
           );
         } else {
           tools = (
-            <div className="userTools">
-              <button
-                id={"btn" + vacation.id}
-                type="button"
-                className="btn float-right followBtn"
-              >
-                {this.state.followIcon}
-
-                <input
-                  id={vacation.id}
-                  onChange={(e) => this.followOrNot(e)}
-                  type="checkbox"
-                  className="checkboxBtn"
-                />
-              </button>
+            <div className="userTools ml-2 mt-1">
+              <i id={"i-" + vacation.id} className="far fa-star"></i>
+              <input
+                id={vacation.id}
+                onChange={(e) => this.followOrNot(e)}
+                type="checkbox"
+                className="checkboxBtn"
+              />
             </div>
           );
         }
       }
-      let image = "http://localhost:4000/uploads/" + vacation.picture;
-
+      let image = `${Settings.GlobalURL}uploads/${vacation.picture}`;
       return (
-        <div key={i} className="card text-info border-info my-3 vacationCard">
-          {tools}
-          <div className="card-header bg-transparent border-info text-center cardTitle">
-            {vacation.destination} <br /> {vacation.description}
-          </div>
-          <div className="card-body text-info">
-            <h5 className="card-title text-center">Only: {vacation.price}$</h5>
-            <img className="imageCard" src={image}></img>
-          </div>
-          <div className="card-footer bg-transparent border-info text-center">
-            From: {vacation.fromDate} <br /> To: {vacation.toDate}
+        <div className="col-xl-4 col-md-6">
+          <div
+            key={i}
+            className="card text-info border-info my-2 mx-1 vacationCard"
+          >
+            {tools}
+            <div className="card-header bg-transparent border-info text-center cardTitle">
+              {vacation.destination} <br /> {vacation.description}
+            </div>
+            <div className="card-body text-info">
+              <h5 className="card-title text-center">
+                Only: {vacation.price}$
+              </h5>
+              <img className="imageCard" src={image}></img>
+            </div>
+            <div className="card-footer bg-transparent border-info text-center">
+              From: {vacation.fromDate} <br /> To: {vacation.toDate}
+            </div>
           </div>
         </div>
       );
@@ -168,7 +179,6 @@ class VacationsCards extends Component {
 const mapStateToProps = (state) => {
   return {
     vacations: state.vacations,
-    isAdmin: state.isAdmin,
     loggedInUser: state.loggedInUser,
   };
 };
@@ -178,6 +188,12 @@ const mapDispatchToProps = (dispatch) => {
     SetVacation(value) {
       dispatch({
         type: "SetVacation",
+        payload: value,
+      });
+    },
+    updateLogInUsers(value) {
+      dispatch({
+        type: "SetLoggedInUser",
         payload: value,
       });
     },

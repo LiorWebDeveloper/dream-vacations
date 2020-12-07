@@ -5,11 +5,11 @@ let vacations = [];
 
 /* this fun call to server send to server to get all vactions */
 export const getAllVacation = async (userId) => {
+  console.log("🚀 ~ file: api.js ~ line 8 ~ getAllVacation ~ userId", userId);
   try {
     await Axios.get(
       `${Settings.GlobalURL}vacations/getAllVacations?userId=${userId}`
     ).then((response) => {
-      // this.props.SetVacation(response.data);
       vacations = response.data;
     });
   } catch (e) {
@@ -68,9 +68,7 @@ export const callToServerDeleteVacation = async (id) => {
 /* this fun call to server and inser vacation to follow */
 export const callToServerAddOrDeleteFavoriteVacation = async (obj, url) => {
   await Axios.post(url, obj)
-    .then((response) => {
-      // this.getAllVacation();
-    })
+    .then((response) => {})
     .catch((error) => {
       console.log("addVactionModal -> error", error);
       alert(
