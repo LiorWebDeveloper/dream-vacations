@@ -4,22 +4,13 @@ import "../addVacationModal.css";
 import AddVacationModal from "../components/addVactionModal";
 import VacationCards from "../components/vacationsCards";
 import { Link, Redirect } from "react-router-dom";
-import socketIOClient from "socket.io-client";
-import * as Api from "../functions/api";
-import Settings from "../functions/settings";
 
 class Admin extends Component {
-  socket;
   state = {
     drowModal: "",
   };
 
-  componentDidMount = () => {
-    this.socket = socketIOClient(Settings.soketUrl);
-    this.socket.on("edit vacation", (vacations) => {
-      this.props.SetVacation(vacations);
-    });
-  };
+  componentDidMount = () => {};
 
   /* this fun move to addVacationModal for close the modal */
   closeModal = () => {

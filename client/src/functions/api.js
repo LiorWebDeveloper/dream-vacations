@@ -5,7 +5,6 @@ let vacations = [];
 
 /* this fun call to server send to server to get all vactions */
 export const getAllVacation = async (userId) => {
-  console.log("🚀 ~ file: api.js ~ line 8 ~ getAllVacation ~ userId", userId);
   try {
     await Axios.get(
       `${Settings.GlobalURL}vacations/getAllVacations?userId=${userId}`
@@ -39,8 +38,10 @@ export const updateVacation = async (obj) => {
 
 /* this fun call to server send to server to add a new vaction */
 export const callToServerAddVacation = async (obj) => {
+  let vacation = {};
   await Axios.post(`${Settings.GlobalURL}vacations/addVacation`, obj)
     .then((response) => {
+      vacation = response.data;
       alert("The vacation was successfully added");
     })
     .catch((error) => {
@@ -49,6 +50,7 @@ export const callToServerAddVacation = async (obj) => {
         "There is a problem with the server, the vacation was not added. Please try again later"
       );
     });
+  return vacation;
 };
 
 /* this fun is call to the server and  delete vacation  */
@@ -75,4 +77,19 @@ export const callToServerAddOrDeleteFavoriteVacation = async (obj, url) => {
         "There is a problem with the server, the vacation was not added. Please try again later"
       );
     });
+};
+
+/* this fun call to server and get all sollow vacations for the admin graph */
+export const callToServerFollowesFromServer = async () => {
+  let follow = [];
+  try {
+    await Axios.get(`${Settings.GlobalURL}follows/getAllFollows`).then(
+      (response) => {
+        follow = response.data;
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
+  return follow;
 };

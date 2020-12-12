@@ -24,13 +24,12 @@ class addVactionModal extends Component {
 
   /* this fun is for send data to soket chanel after change */
   sendSocket = (vacation) => {
-    this.socket.emit("edit vacation", vacation);
+    this.socket.emit("add vacation", vacation);
   };
 
   getAllVacation = async () => {
     let vacation = await Api.getAllVacation(this.logInUserId);
     this.props.SetVacation(vacation);
-    this.sendSocket(vacation);
   };
 
   /* this fun update the state from the form data */
@@ -74,9 +73,10 @@ If not full writes in HTML that missing information  */
       this.state.price != "" &&
       arr.length != 0
     ) {
-      await Api.callToServerAddVacation(formData);
+      let vacation = await Api.callToServerAddVacation(formData);
       this.closeBtn();
       this.getAllVacation();
+      this.sendSocket(vacation);
     } else {
       this.setState({
         missingData:

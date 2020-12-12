@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import {
-  VictoryBar,
-  VictoryChart,
-} from "victory";
-import Axios from "axios";
+import { VictoryBar, VictoryChart } from "victory";
+import * as Api from "../functions/api";
 
 class FollowsGraph extends Component {
   state = {
@@ -15,17 +12,8 @@ class FollowsGraph extends Component {
   };
 
   getFollowesFromServer = async () => {
-    try {
-      await Axios.get(`http://localhost:4000/follows/getAllFollows`).then(
-        (response) => {
-          /*  this.bulidData(response.data); */
-          this.setState({ data: response.data });
-          console.log(this.state.data);
-        }
-      );
-    } catch (e) {
-      console.log(e);
-    }
+    let dataFromServer = await Api.callToServerFollowesFromServer();
+    this.setState({ data: dataFromServer });
   };
 
   bulidData = (array) => {

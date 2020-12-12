@@ -1,9 +1,3 @@
-//const http = require("http");
-//const socketIO = require("socket.io");
-//var server = app.listen(4002);
-//const server = http.createServer(app);
-//const io = socketIO(server);
-
 const express = require("express");
 const app = express();
 var multer = require("multer");
@@ -16,8 +10,6 @@ const sequelize = require("./utils/database");
 const Users = require("./models/usersModel");
 const Vacation = require("./models/vacationsModel");
 const Follows = require("./models/followsModel");
-
-//app.use(express.static(path.join(__dirname, "uploads")));
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -46,16 +38,20 @@ app.use((req, res) => {
   res.send("Page NotFound");
 });
 
+/* from here it is all soket functions */
 io.on("connection", (socket) => {
   console.log("New client connected");
 
-  // just like on the client side, we have a socket.on method that takes a callback function
   socket.on("edit vacation", (vacation) => {
-    // once we get a 'edit vacation' event from one of our clients, we will send it to the rest of the clients
-    // we make use of the socket.emit method again with the argument given to use from the callback function above
-
-    // console.log("edit vacation to: ", vacation);
     io.sockets.emit("edit vacation", vacation);
+  });
+
+  socket.on("add vacation", (vacation) => {
+    io.sockets.emit("add vacation", vacation);
+  });
+
+  socket.on("delete vacation", (vacation) => {
+    io.sockets.emit("delete vacation", vacation);
   });
 
   // disconnect is fired when a client leaves the server

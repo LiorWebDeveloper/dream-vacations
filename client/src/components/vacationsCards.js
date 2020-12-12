@@ -6,19 +6,61 @@ import Settings from "../functions/settings";
 import socketIOClient from "socket.io-client";
 
 class VacationsCards extends Component {
+  socket;
+
   constructor(props) {
     super(props);
     this.state = {
       drowEdit: "",
       followIcon: <i id={this.props.vacations.id} className="far fa-star"></i>,
       userId: null,
+      vacations: [],
     };
   }
 
   componentDidMount = async () => {
-    this.socket = socketIOClient(Settings.soketUrl);
     await this.getLoacalStorage();
-    this.getAllVacation(this.state.userId);
+    await this.getAllVacation(this.state.userId);
+    this.setState({ vacations: this.props.vacations });
+    this.markFollowOnFollowVacationsOnLoad();
+    this.socket = socketIOClient(Settings.soketUrl);
+    this.editVacationSoket();
+    this.addVacationSoket();
+    this.deleteVacationSoket();
+  };
+
+  /* this fun us for edit get vacation after edit from editVacationModel.js and do setstate */
+  editVacationSoket = () => {
+    this.socket.on("edit vacation", (vacation) => {
+      let allVacations = [...this.state.vacations];
+      let index = this.props.vacations.findIndex((v) => v.id === vacation.id);
+      allVacations[index] = vacation;
+      this.setState({ vacations: allVacations });
+    });
+  };
+
+  /* this fun us for add get vacation after add from addVacationModel.js and do setstate */
+  addVacationSoket = () => {
+    this.socket.on("add vacation", (vacation) => {
+      let allVacations = [...this.state.vacations];
+      allVacations.push(vacation);
+      this.setState({ vacations: allVacations });
+    });
+  };
+
+  /* this fun us for delete get vacation after delete from this copmmpnent and do setstate */
+  deleteVacationSoket = () => {
+    this.socket.on("delete vacation", (id) => {
+      let allVacations = [...this.state.vacations];
+      let index = this.props.vacations.findIndex((v) => v.id === id);
+      allVacations.splice(index, 1);
+      this.setState({ vacations: allVacations });
+    });
+  };
+
+  /* this fun is for send data to soket chanel after delete */
+  sendVacationForDeleteSocket = (vacation) => {
+    this.socket.emit("delete vacation", vacation);
   };
 
   getLoacalStorage = () => {
@@ -31,22 +73,19 @@ class VacationsCards extends Component {
     }
   };
 
-  /* this fun is for send data to soket chanel after change */
-  sendSocket = (vacation) => {
-    this.socket.emit("edit vacation", vacation);
-  };
-
   /* this fun get all vacations from server and update the reducer */
   getAllVacation = async (userId) => {
-    let vacation = await Api.getAllVacation(userId);
-    this.sendSocket(vacation);
-    this.props.SetVacation(vacation);
+    let vacations = await Api.getAllVacation(userId);
+    this.setState({ vacations: vacations });
+    this.props.SetVacation(vacations);
   };
 
   /* this fun is onclick fun on button in card. for delete vacation by id */
   deleteVacation = (e) => {
     Api.callToServerDeleteVacation(e);
-    this.getAllVacation();
+    this.sendVacationForDeleteSocket(e);
+
+    //this.getAllVacation();
   };
 
   colseEditModal = () => {
@@ -75,7 +114,8 @@ class VacationsCards extends Component {
     );
   };
 
-  followOrNot = (e) => {
+  followOrNot = (e, i) => {
+    let vacations = [...this.props.vacations];
     let btn = document.getElementById("i-" + e.target.id);
     if (e.target.checked == true) {
       this.addVacationToFollow(e.target.id);
@@ -85,7 +125,22 @@ class VacationsCards extends Component {
       this.deleteVacationToFollow(e.target.id);
       btn.classList.remove("fas");
       btn.classList.add("far");
+      /*       vacations.splice(i, 1);
+      vacations.push(this.props.vacations[i]);
+ */
     }
+  };
+
+  /* this fun is to mark all the follows vacaitons on page load */
+  markFollowOnFollowVacationsOnLoad = () => {
+    this.props.vacations.map((vacation) => {
+      let followBtn = document.getElementById("i-" + vacation.id);
+      let checkboxBtn = document.getElementById(vacation.id);
+      if (vacation.isFollow == true) {
+        followBtn.classList.add("fas");
+        checkboxBtn.checked = true;
+      }
+    });
   };
 
   render() {
@@ -103,8 +158,7 @@ class VacationsCards extends Component {
     let tools = "";
     let deleteIcon = <i className="fas fa-trash-alt"> </i>;
     let editIcon = <i className="fas fa-edit"> </i>;
-    console.log(this.props.vacations);
-    let drowCard = this.props.vacations.map((vacation, i) => {
+    let drowCard = this.state.vacations.map((vacation, i) => {
       if (this.props.loggedInUser != null) {
         if (this.props.loggedInUser.role == 1) {
           tools = (
@@ -131,7 +185,7 @@ class VacationsCards extends Component {
               <i id={"i-" + vacation.id} className="far fa-star"></i>
               <input
                 id={vacation.id}
-                onChange={(e) => this.followOrNot(e)}
+                onChange={(e) => this.followOrNot(e, i)}
                 type="checkbox"
                 className="checkboxBtn"
               />
@@ -141,7 +195,7 @@ class VacationsCards extends Component {
       }
       let image = `${Settings.GlobalURL}uploads/${vacation.picture}`;
       return (
-        <div className="col-xl-4 col-md-6">
+        <div key={i} className="col-xl-4 col-md-6">
           <div
             key={i}
             className="card text-info border-info my-2 mx-1 vacationCard"

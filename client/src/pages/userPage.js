@@ -3,17 +3,9 @@ import "../login.css";
 import { connect } from "react-redux";
 import VacationCards from "../components/vacationsCards";
 import { Redirect } from "react-router-dom";
-import socketIOClient from "socket.io-client";
-import Settings from "../functions/settings";
 
 class UserPage extends Component {
-  socket;
-
   componentDidMount = () => {
-    this.socket = socketIOClient(Settings.soketUrl);
-    this.socket.on("edit vacation", (vacations) => {
-      this.props.SetVacation(vacations);
-    });
     this.getLoacalStorage();
   };
 

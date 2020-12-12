@@ -58,8 +58,15 @@ class EditVacationModal extends Component {
     formData.append("price", price);
     formData.append("id", id);
     let vacations = await Api.updateVacation(formData);
-    this.sendSocket(vacations);
+    let vacation = this.findtVacationToSendSoket(vacations, id);
+    this.sendSocket(vacation);
     this.closeBtn();
+  };
+
+  /* this fun for fin the vacatuon we edit and send only this vacation object to soket */
+  findtVacationToSendSoket = (vacations, id) => {
+    let index = vacations.findIndex((vacation) => vacation.id === id);
+    return vacations[index];
   };
 
   onChange = (e) => {
@@ -76,7 +83,7 @@ class EditVacationModal extends Component {
   };
   render() {
     let vacation = this.props.vacation;
-    //  let image = require("../images/" + vacation.picture);
+    let image = `${Settings.GlobalURL}uploads/${vacation.picture}`;
     this.state.drowCard = (
       <div className="card text-info border-info my-3 vacationCard">
         <form>
@@ -116,8 +123,7 @@ class EditVacationModal extends Component {
               onChange={this.onChange}
               multiple
             />
-            {/*             <img className="imageCard" src={image}></img>
-             */}{" "}
+            <img className="imageCard" src={image}></img>
           </div>
           <div className="card-footer bg-transparent border-info text-center">
             <label className="dateForm text-info">

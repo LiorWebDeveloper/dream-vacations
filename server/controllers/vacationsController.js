@@ -42,6 +42,7 @@ exports.getAllVacations = async (req, res) => {
           (vacation) => vacation.id === follow.vacationId
         );
         let vacationToPush = vacations[index];
+        vacationToPush.dataValues.isFollow = true;
         vacations.splice(index, 1);
         vacations.unshift(vacationToPush);
       });

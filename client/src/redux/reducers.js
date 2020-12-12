@@ -13,7 +13,6 @@ function rootReducer(state = initialState, action) {
       state = { ...state, vacations: action.payload };
       break;
   }
-
   switch (action.type) {
     case "SetUsers":
       state = { ...state, users: action.payload };

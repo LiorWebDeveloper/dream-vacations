@@ -126,7 +126,7 @@
 }
 
 .checkboxBtn {
-  opacity: 0;
+  opacity: 0.2;
   position: absolute;
   top: 37%;
   right: 0px;
