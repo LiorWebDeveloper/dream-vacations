@@ -3,6 +3,38 @@ import Settings from "./settings";
 
 let vacations = [];
 
+/* this fun call to server and send email and paswworad to DB for log in */
+export const logInAfterSubmit = async (obj) => {
+  let resulte;
+  try {
+    await Axios.post(`${Settings.GlobalURL}users/getUserByMail`, obj).then(
+      (response) => {
+        resulte = response.data;
+      }
+    );
+  } catch (e) {
+    alert("one it worng");
+    console.log(e);
+  }
+  return resulte;
+};
+
+/* this fun do validation for thr form befor send  and if all OK it is send to the server */
+export const createNewUser = async (obj) => {
+  let resulte;
+  try {
+    await Axios.post(`${Settings.GlobalURL}users/insertUser`, obj).then(
+      (response) => {
+        resulte = response.data;
+      }
+    );
+  } catch (e) {
+    console.log(e);
+    alert("There is a problem with the server, please try again later");
+  }
+  return resulte;
+};
+
 /* this fun call to server send to server to get all vactions */
 export const getAllVacation = async (userId) => {
   try {

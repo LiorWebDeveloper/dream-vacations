@@ -61,20 +61,26 @@
 }
 
 #adminTitle {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-family: Impact;
   color: rgba(14, 58, 104, 0.938);
 }
 
 #followLink {
   font-size: 0.8rem;
-  width: 50%;
-  margin-left: 25%;
+  background-color: #a39d9da1;
+}
+
+#linktoGraph:hover {
+  text-decoration: none;
+  color: white;
+}
+.linktoGraph {
+  text-decoration: none;
+  color: inherit;
 }
 
 #addVactionButton {
-  width: 50%;
-  margin-left: 25%;
   background-color: #a39d9da1;
   font-size: 0.8rem;
 }
@@ -163,4 +169,25 @@
 
 #footerWrapper span {
   font-size: 0.6rem;
+}
+
+.addAndEditModel {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+#editCard {
+  width: 40%;
+  margin-left: 30%;
+}
+.nonDcoraiton {
+  text-decoration: none;
+  color: inherit;
+}
+
+.nonDcoraiton:hover {
+  text-decoration: none;
+  color: inherit;
 }

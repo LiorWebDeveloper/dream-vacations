@@ -43,8 +43,7 @@ class Header extends Component {
         <div id="hedaerText" className="col-md-6">
           <h1 className="text-center"> Lior Draem Vacations</h1>
           <h2 className="text-center">
-            {" "}
-            Choose a Vacation {arrow} Follow vacation {arrow} Stay Updated{" "}
+            Choose a Vacation {arrow} Follow vacation {arrow} Stay Updated
           </h2>
         </div>
 
@@ -52,7 +51,7 @@ class Header extends Component {
           id="userName"
           className="col-md-3 text-right mt-auto p-2 bd-highlight mb-1"
         >
-          Hello {theName} |{" "}
+          Hello {theName} |
           <Link id="logoutLink" onClick={() => this.logOutUser()} to="/">
             <span id="userNameText">
               Logout <i className="fas fa-sign-out-alt"></i>

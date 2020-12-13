@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import "../login.css";
 import { connect } from "react-redux";
-import Axios from "axios";
 import { Redirect } from "react-router-dom";
-import Settings from "../functions/settings";
+import * as Api from "../functions/api";
 
 class Login extends Component {
   newUserObj = {};
-
   state = {
     firstName: "",
     lastName: "",
@@ -15,8 +13,13 @@ class Login extends Component {
     password: "",
     logInMail: "",
     logInPassword: "",
-    mailErr: "",
     incorrectMailOrPassword: "",
+    isError: {
+      firstName: "",
+      lastName: "",
+      mail: "",
+      password: "",
+    },
   };
 
   componentDidMount = () => {
@@ -37,6 +40,7 @@ class Login extends Component {
 
   /* this fun call the server To know if it is admin or reguler user and update the reducer */
   logInSubmit = async (status) => {
+    let resulteFromServer = "";
     let obj = {
       mail: "",
       password: "",
@@ -48,24 +52,15 @@ class Login extends Component {
       obj.mail = this.state.mail;
       obj.password = this.state.password;
     }
-
-    try {
-      await Axios.post(`${Settings.GlobalURL}users/getUserByMail`, obj).then(
-        (response) => {
-          if (response.data != "incorrect") {
-            this.props.updateLogInUsers(response.data);
-            this.setLoacalStorage(this.props.loggedInUser);
-          } else {
-            this.setState({
-              incorrectMailOrPassword: "Email or password is incorrect",
-            });
-          }
-        }
-      );
-    } catch (e) {
-      alert("one it worng");
-      console.log(e);
-    }
+    /* this fun call to server and check if the email and the passworad is correct or incorrect */
+    resulteFromServer = await Api.logInAfterSubmit(obj);
+    if (resulteFromServer != "incorrect") {
+      this.props.updateLogInUsers(resulteFromServer);
+      this.setLoacalStorage(this.props.loggedInUser);
+    } else
+      this.setState({
+        incorrectMailOrPassword: "Email or password is incorrect",
+      });
   };
 
   /* this fun is for validate the input email address  */
@@ -77,34 +72,59 @@ class Login extends Component {
     ) {
       return true;
     }
-    this.setState({ mailErr: "You have entered an invalid email address!" });
     return false;
   }
 
-  /* this fun do validation for thr form befor send  and if all OK it is send to the server */
+  /* this fun is for do validation for the sing up form befor send to the server and insert note where is a problem  */
+  checkForm(newUser) {
+    let flag = true;
+    console.log(newUser);
+    let mail = this.ValidateEmail(newUser.mail);
+    let Error = {
+      firstName: "",
+      lastName: "",
+      password: "",
+      mail: "",
+    };
+    this.setState({ isError: Error });
+    if (newUser.firstName.length < 2) {
+      Error.firstName = "Enter at least 2 characters";
+      this.setState({ isError: Error });
+      flag = false;
+    }
+    if (newUser.lastName.length < 2) {
+      Error.lastName = "Enter at least 2 characters";
+      this.setState({ isError: Error });
+      flag = false;
+    }
+    if (newUser.password < 6) {
+      Error.password = "Enter at least 6 characters";
+      this.setState({ isError: Error });
+      flag = false;
+    }
+    if (mail == false) {
+      Error.mail = "You have entered an invalid email address!";
+      this.setState({ isError: Error });
+      flag = false;
+    }
+    return flag;
+  }
+
+  /* this fun is call to validate function and if it is all ok  we  call to server and insert a new user   */
   createNewUser = async () => {
-    let mail = this.ValidateEmail(this.newUserObj.mail);
-    if (
-      this.newUserObj.firstName != "" &&
-      this.newUserObj.lastName != "" &&
-      this.newUserObj.password != "" &&
-      mail != false
-    ) {
-      try {
-        await Axios.post(
-          `${Settings.GlobalURL}users/insertUser`,
-          this.newUserObj
-        ).then((response) => {
-          if (response.data != "mailExists") {
-            alert("it is done");
-            this.logInSubmit(0);
-          } else {
-            this.setState({ mailErr: "this Email address is olrady exists" });
-          }
-        });
-      } catch (e) {
-        console.log(e);
-        alert("There is a problem with the server, please try again later");
+    let Error = {
+      firstName: "",
+      lastName: "",
+      password: "",
+      mail: "",
+    };
+    let validate = this.checkForm(this.newUserObj);
+    if (validate != false) {
+      let resulte = await Api.createNewUser(this.newUserObj);
+      if (resulte != "mailExists") this.logInSubmit(0);
+      else {
+        Error.mail = "The email address is already exists";
+        this.setState({ isError: Error });
       }
     }
   };
@@ -122,16 +142,14 @@ class Login extends Component {
   };
 
   render() {
-    /* this fun is for know after the log in the right direction of page   */
+    /* this fun is for know after the log in the right direction of page is it is admin go to admin page if it is user go to the user page  */
     let pageDirection = "";
     const direction = () => {
       if (this.props.loggedInUser != null) {
-        if (this.props.loggedInUser.role == 1) {
-          /*           this.props.setIsAdmin(true);
-           */ pageDirection = <Redirect to="/admin" />;
-        } else if (this.props.loggedInUser.role == 0) {
+        if (this.props.loggedInUser.role == 1)
+          pageDirection = <Redirect to="/admin" />;
+        else if (this.props.loggedInUser.role == 0)
           pageDirection = <Redirect to="/user" />;
-        }
       }
     };
     direction();
@@ -196,6 +214,9 @@ class Login extends Component {
                     type="text"
                     required
                   />
+                  <small className="isErr">
+                    {this.state.isError.firstName}
+                  </small>
                   <div
                     style={{ fontSize: "0.5rem" }}
                     className="invalid-feedback "
@@ -212,6 +233,9 @@ class Login extends Component {
                     type="text"
                     required
                   />
+                  <small className="isErr ">
+                    {this.state.isError.lastName}
+                  </small>
                   <div
                     style={{ fontSize: "0.5rem" }}
                     className="invalid-feedback"
@@ -234,8 +258,8 @@ class Login extends Component {
                   >
                     *Required!
                   </div>
-                  <small id="emailHelp" className="form-text text-muted">
-                    {this.state.mailErr}
+                  <small className="form-text text-muted isErr">
+                    {this.state.isError.mail}
                   </small>
                 </label>
                 <label>
@@ -247,6 +271,7 @@ class Login extends Component {
                     type="password"
                     required
                   />
+                  <small className="isErr">{this.state.isError.password}</small>
                   <div
                     style={{ fontSize: "0.5rem" }}
                     className="invalid-feedback"
@@ -286,14 +311,6 @@ const mapDispatchToProps = (dispatch) => {
         payload: value,
       });
     },
-
-    /*     setIsAdmin(value) {
-      dispatch({
-        type: "setIfIsAdmin",
-        payload: value,
-      });
-    },
- */
   };
 };
 

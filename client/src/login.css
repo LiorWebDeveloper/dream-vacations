@@ -1,4 +1,6 @@
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   margin: 0;
@@ -6,15 +8,16 @@
 }
 
 body {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
   background: #ededed;
 }
 
-input, button {
+input,
+button {
   border: none;
   outline: none;
   background: none;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
 
 .tip {
@@ -75,7 +78,7 @@ input, button {
 }
 
 .img:before {
-  content: '';
+  content: "";
   position: absolute;
   right: 0;
   top: 0;
@@ -90,7 +93,7 @@ input, button {
 }
 
 .img:after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -159,7 +162,7 @@ input, button {
 }
 
 .img__btn:after {
-  content: '';
+  content: "";
   z-index: 2;
   position: absolute;
   left: 0;
@@ -330,5 +333,10 @@ input {
   color: red;
   font-weight: 400;
   margin-top: 20px;
+}
+
+.isErr {
+  font-size: 0.5rem;
+  color: red !important;
 }
 /*# sourceMappingURL=login.css.map */

@@ -3,11 +3,13 @@ import { VictoryBar, VictoryChart } from "victory";
 import * as Api from "../functions/api";
 import Settings from "../functions/settings";
 import socketIOClient from "socket.io-client";
+import { Link, Redirect } from "react-router-dom";
 
 class FollowsGraph extends Component {
   socket;
   state = {
     data: [],
+    direction: "",
   };
 
   componentDidMount = () => {
@@ -29,6 +31,10 @@ class FollowsGraph extends Component {
     });
   };
 
+  backToAdminPage = () => {
+    this.setState({ direction: <Redirect to="/admin" /> });
+  };
+
   render() {
     let dataForChart = [];
     this.state.data.map((item) => {
@@ -41,6 +47,14 @@ class FollowsGraph extends Component {
 
     return (
       <div id="chartWrapper">
+        {this.state.direction}
+        <button
+          onClick={() => this.backToAdminPage()}
+          type="button"
+          className="btn btn-outline-info"
+        >
+          Vacations Card
+        </button>
         <VictoryChart domainPadding={25}>
           <VictoryBar data={dataForChart} />
         </VictoryChart>

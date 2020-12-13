@@ -69,6 +69,7 @@ class EditVacationModal extends Component {
     return vacations[index];
   };
 
+  /* this fun update the state from the form data */
   onChange = (e) => {
     if (e.target.type == "file") {
       this.setState({ picture: e.target.files });
@@ -81,11 +82,15 @@ class EditVacationModal extends Component {
   closeBtn = () => {
     this.props.closeModal();
   };
+
   render() {
     let vacation = this.props.vacation;
     let image = `${Settings.GlobalURL}uploads/${vacation.picture}`;
     this.state.drowCard = (
-      <div className="card text-info border-info my-3 vacationCard">
+      <div
+        id="editCard"
+        className="card text-info border-info my-3 vacationCard"
+      >
         <form>
           <div className="card-header bg-transparent border-info text-center cardTitle">
             <span>Edit this vacation </span>
@@ -94,7 +99,7 @@ class EditVacationModal extends Component {
               name="destination"
               onChange={this.onChange}
               type="text"
-              placeholder={vacation.destination}
+              value={vacation.destination}
             ></input>{" "}
             <br />
             <label className="dateForm text-info">Edit Description</label>
@@ -102,7 +107,7 @@ class EditVacationModal extends Component {
               name="description"
               onChange={this.onChange}
               type="text"
-              placeholder={vacation.description}
+              value={vacation.description}
             ></input>
           </div>
           <div className="card-body text-info">

@@ -168,7 +168,9 @@ class VacationsCards extends Component {
                 type="button"
                 className="btn float-right mr-2"
               >
-                {editIcon}
+                <a className="nonDcoraiton" href="#editCard">
+                  {editIcon}
+                </a>
               </button>
             </span>
           );

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as Api from "../functions/api";
 import Settings from "../functions/settings";
 import socketIOClient from "socket.io-client";
-import { connect } from "react-redux";
 
 class addVactionModal extends Component {
   constructor(props) {
@@ -27,11 +26,6 @@ class addVactionModal extends Component {
     this.socket.emit("add vacation", vacation);
   };
 
-  getAllVacation = async () => {
-    let vacation = await Api.getAllVacation(this.logInUserId);
-    this.props.SetVacation(vacation);
-  };
-
   /* this fun update the state from the form data */
   onChange = (e) => {
     if (e.target.type == "file") {
@@ -43,7 +37,7 @@ class addVactionModal extends Component {
 
   /* this fun is coming from admin.js and is for close the add vacation modal */
   closeBtn = () => {
-    this.props.fn();
+    this.props.closeFun();
   };
 
   /* this fun bild a object  and   does a test, if the whole form fills a function: "callToServerAddVacation"
@@ -74,9 +68,8 @@ If not full writes in HTML that missing information  */
       arr.length != 0
     ) {
       let vacation = await Api.callToServerAddVacation(formData);
-      this.closeBtn();
-      this.getAllVacation();
       this.sendSocket(vacation);
+      this.closeBtn();
     } else {
       this.setState({
         missingData:
@@ -184,27 +177,4 @@ If not full writes in HTML that missing information  */
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loggedInUser: state.loggedInUser,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    SetVacation(value) {
-      dispatch({
-        type: "SetVacation",
-        payload: value,
-      });
-    },
-    updateLogInUsers(value) {
-      dispatch({
-        type: "SetLoggedInUser",
-        payload: value,
-      });
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(addVactionModal);
+export default addVactionModal;
