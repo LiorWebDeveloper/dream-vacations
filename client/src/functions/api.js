@@ -70,13 +70,19 @@ export const callToServerDeleteVacation = async (id) => {
 /* this fun call to server and inser vacation to follow */
 export const callToServerAddOrDeleteFavoriteVacation = async (obj, url) => {
   await Axios.post(url, obj)
-    .then((response) => {})
+    .then((response) => {
+      console.log(response.data);
+    })
     .catch((error) => {
       console.log("addVactionModal -> error", error);
       alert(
         "There is a problem with the server, the vacation was not added. Please try again later"
       );
     });
+
+  /* here we get all the follows vacations after the change and send back **it is for soket**  */
+  let allFollows = await callToServerFollowesFromServer();
+  return allFollows;
 };
 
 /* this fun call to server and get all sollow vacations for the admin graph */

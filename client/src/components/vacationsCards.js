@@ -63,6 +63,11 @@ class VacationsCards extends Component {
     this.socket.emit("delete vacation", vacation);
   };
 
+  /* this fun is for send data to soket chanel after delete */
+  sendFollowsVacationsSocket = (followsVacation) => {
+    this.socket.emit("follows vacation", followsVacation);
+  };
+
   getLoacalStorage = () => {
     let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
     if (userFromLoaclStorah != null) {
@@ -84,50 +89,38 @@ class VacationsCards extends Component {
   deleteVacation = (e) => {
     Api.callToServerDeleteVacation(e);
     this.sendVacationForDeleteSocket(e);
-
-    //this.getAllVacation();
   };
 
   colseEditModal = () => {
     this.setState({ drowEdit: "" });
   };
 
-  addVacationToFollow = (i) => {
+  addOrDeleteVacationToFollow = async (i, status) => {
     let obj = {
       userId: this.props.loggedInUser.id,
       vacationId: i,
     };
-    Api.callToServerAddOrDeleteFavoriteVacation(
+    let allFollowsVacations = await Api.callToServerAddOrDeleteFavoriteVacation(
       obj,
-      `${Settings.GlobalURL}follows/insertFollows`
+      `${Settings.GlobalURL}follows/${status}`
     );
-  };
-
-  deleteVacationToFollow = (i) => {
-    let obj = {
-      userId: this.props.loggedInUser.id,
-      vacationId: i,
-    };
-    Api.callToServerAddOrDeleteFavoriteVacation(
-      obj,
-      `${Settings.GlobalURL}follows/deleteFollows`
-    );
+    this.sendFollowsVacationsSocket(allFollowsVacations);
   };
 
   followOrNot = (e, i) => {
-    let vacations = [...this.props.vacations];
+    //let vacations = [...this.props.vacations];
+    let status = "";
     let btn = document.getElementById("i-" + e.target.id);
     if (e.target.checked == true) {
-      this.addVacationToFollow(e.target.id);
+      status = "insertFollows";
+      this.addOrDeleteVacationToFollow(e.target.id, status);
       btn.classList.remove("far");
       btn.classList.add("fas");
     } else {
-      this.deleteVacationToFollow(e.target.id);
+      status = "deleteFollows";
+      this.addOrDeleteVacationToFollow(e.target.id, status);
       btn.classList.remove("fas");
       btn.classList.add("far");
-      /*       vacations.splice(i, 1);
-      vacations.push(this.props.vacations[i]);
- */
     }
   };
 

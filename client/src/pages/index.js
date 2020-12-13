@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Login from "./login";
-import FollowsGraph from "../components/followsGraph";
+import FollowsGraph from "./followsGraph";
 import UserPage from "./userPage";
 import Admin from "./admin";
 import { Route } from "react-router-dom";

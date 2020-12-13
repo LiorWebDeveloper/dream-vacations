@@ -53,6 +53,9 @@ io.on("connection", (socket) => {
   socket.on("delete vacation", (vacation) => {
     io.sockets.emit("delete vacation", vacation);
   });
+  socket.on("follows vacation", (followsVacation) => {
+    io.sockets.emit("follows vacation", followsVacation);
+  });
 
   // disconnect is fired when a client leaves the server
   socket.on("disconnect", () => {
