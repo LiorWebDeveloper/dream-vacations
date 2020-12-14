@@ -70,12 +70,11 @@ If not full writes in HTML that missing information  */
       let vacation = await Api.callToServerAddVacation(formData);
       this.sendSocket(vacation);
       this.closeBtn();
-    } else {
+    } else
       this.setState({
         missingData:
           "* All fields are required !! Please fill out the form and try again",
       });
-    }
   };
 
   render() {

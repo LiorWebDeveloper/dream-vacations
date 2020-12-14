@@ -17,14 +17,13 @@ router.post(
   upload.array("uploads[]", 12),
   vacationsController.addVacation
 );
-router.get("/getAllVacations", vacationsController.getAllVacations);
-router.get("/deleteVacation", vacationsController.deleteVacation);
 router.post(
   "/updateVacation",
   upload.array("uploads[]", 12),
   vacationsController.updateVacation
 );
 
-router.get("/getVacationsById", vacationsController.getVacationsById);
+router.get("/getAllVacations", vacationsController.getAllVacations);
+router.get("/deleteVacation", vacationsController.deleteVacation);
 
 module.exports = router;

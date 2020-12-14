@@ -2,6 +2,7 @@ const con = require("../utils/database");
 const Follows = require("../models/followsModel");
 const Vacations = require("../models/vacationsModel");
 
+/* here we get all follows vacation from DB */
 exports.getAllFollows = async (req, res) => {
   let vacations = [];
   let followsArr = [];
@@ -32,6 +33,9 @@ exports.getAllFollows = async (req, res) => {
   res.send(followsArr);
 };
 
+/* here we get object from the client and do check if this vacation is follow send to server vacation Exists 
+if this vacation us unfollow we insert to DB this vacation to follow
+*/
 exports.insertFollows = async (req, res) => {
   let FollowsObj = {
     userId: req.body.userId,
@@ -57,6 +61,7 @@ exports.insertFollows = async (req, res) => {
   });
 };
 
+/* here we get a user id and a vacation id and delete the follow vacation from DB */
 exports.deleteFollows = async (req, res) => {
   let userId = req.body.userId;
   let vacationId = req.body.vacationId;

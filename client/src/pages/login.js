@@ -78,7 +78,6 @@ class Login extends Component {
   /* this fun is for do validation for the sing up form befor send to the server and insert note where is a problem  */
   checkForm(newUser) {
     let flag = true;
-    console.log(newUser);
     let mail = this.ValidateEmail(newUser.mail);
     let Error = {
       firstName: "",

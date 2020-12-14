@@ -34,6 +34,7 @@ class Admin extends Component {
         this.setState({ pageDirection: <Redirect to="/" /> });
       }
     };
+    /* this is for on click button to go the follow graph page */
     let goToGraph = () => {
       this.setState({ pageDirection: <Redirect to="/graph" /> });
     };
@@ -45,19 +46,17 @@ class Admin extends Component {
         <div className="d-flex justify-content-around mt-2 pt-3">
           <button
             onClick={() => this.addNewVaction()}
-            id="addVactionButton"
             type="button"
-            className="btn btn-outline-info pl-4"
+            className="btn btn-outline-info pl-4 adminButton"
           >
             Add a New Vacation
           </button>
-          <h3 className="text-center pt-2" id="adminTitle">
+          <h3 className="text-center pt-2 adminTitle">
             Hello Admin! <br /> Welcome to your management system
           </h3>
           <button
-            id="followLink"
             type="button"
-            className="btn btn-outline-info"
+            className="btn btn-outline-info adminButton"
             onClick={() => goToGraph()}
           >
             Follows graph

@@ -7,7 +7,6 @@ import socketIOClient from "socket.io-client";
 
 class VacationsCards extends Component {
   socket;
-
   constructor(props) {
     super(props);
     this.state = {
@@ -95,6 +94,7 @@ class VacationsCards extends Component {
     this.setState({ drowEdit: "" });
   };
 
+  /* this fun call to server and update DB  */
   addOrDeleteVacationToFollow = async (i, status) => {
     let obj = {
       userId: this.props.loggedInUser.id,
@@ -107,8 +107,8 @@ class VacationsCards extends Component {
     this.sendFollowsVacationsSocket(allFollowsVacations);
   };
 
+  /* this fun is after the user mark or unmark follow of vacation, call to server and update DB and sent soket to admin */
   followOrNot = (e, i) => {
-    //let vacations = [...this.props.vacations];
     let status = "";
     let btn = document.getElementById("i-" + e.target.id);
     if (e.target.checked == true) {

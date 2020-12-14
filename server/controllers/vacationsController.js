@@ -2,6 +2,8 @@ const con = require("../utils/database");
 const Vacations = require("../models/vacationsModel");
 const Follows = require("../models/followsModel");
 
+/* here we get object from the client and insert to DB this a new vacation */
+
 exports.addVacation = async (req, res) => {
   let files = req.files;
   let newVactionObj = {
@@ -22,6 +24,8 @@ exports.addVacation = async (req, res) => {
     });
   res.send(files[0]);
 };
+
+/* here we get all  vacation from DB  and order the follows vacation pf this user first*/
 
 exports.getAllVacations = async (req, res) => {
   let userId = req.query.userId;
@@ -53,17 +57,7 @@ exports.getAllVacations = async (req, res) => {
     });
 };
 
-exports.getVacationsById = async (req, res) => {
-  let id = req.query.id;
-  await Vacations.findOne({ where: { id: id } })
-    .then((result) => {
-      res.send(result);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-};
-
+/* here we get vacation id from client(admin) and delete from DB */
 exports.deleteVacation = async (req, res) => {
   let id = req.query.id;
   await Vacations.destroy({ where: { id: id } })
@@ -75,6 +69,9 @@ exports.deleteVacation = async (req, res) => {
     });
 };
 
+/* here we get object from client and we find the vacation id an update
+also we send back all vacation after the update
+*/
 exports.updateVacation = async (req, res) => {
   let files = req.body.files;
   await Vacations.update(

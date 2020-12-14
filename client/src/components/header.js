@@ -25,15 +25,23 @@ class Header extends Component {
   render() {
     /* this for Write down the full name of the loged in user  or guest near to the logout */
     let theName = "";
-    this.props.loggedInUser != null
-      ? (theName =
-          this.props.loggedInUser.firstName +
-          " " +
-          this.props.loggedInUser.lastName)
-      : (theName = "Guest");
+    let logOut = "";
+
+    if (this.props.loggedInUser != null) {
+      theName =
+        this.props.loggedInUser.firstName +
+        " " +
+        this.props.loggedInUser.lastName;
+      logOut = (
+        <Link id="logoutLink" onClick={() => this.logOutUser()} to="/">
+          <span id="userNameText">
+            | Logout <i className="fas fa-sign-out-alt"></i>
+          </span>
+        </Link>
+      );
+    } else theName = "Guest";
 
     let arrow = <i className="fas fa-angle-double-right mx-2"></i>;
-
     return (
       <div id="headerWrapper" className="row mx-1">
         <div className="col-md-3 px-0">
@@ -51,12 +59,7 @@ class Header extends Component {
           id="userName"
           className="col-md-3 text-right mt-auto p-2 bd-highlight mb-1"
         >
-          Hello {theName} |
-          <Link id="logoutLink" onClick={() => this.logOutUser()} to="/">
-            <span id="userNameText">
-              Logout <i className="fas fa-sign-out-alt"></i>
-            </span>
-          </Link>
+          Hello {theName} {logOut}
         </div>
       </div>
     );

@@ -37,7 +37,6 @@ class EditVacationModal extends Component {
     /* here do check if the client uploade new picture or not */
     if (this.state.picture != "") {
       let arr = [...this.state.picture];
-      console.log("EditVacationModal -> arr", arr);
       for (let i = 0; i < arr.length; i++) {
         formData.append("uploads[]", arr[i], arr[i]["name"]);
       }
@@ -93,26 +92,26 @@ class EditVacationModal extends Component {
       >
         <form>
           <div className="card-header bg-transparent border-info text-center cardTitle">
-            <span>Edit this vacation </span>
-            <label className="dateForm text-info">Edit Destination</label>
+            <span>Edit vacation </span>
+            <label className="dateForm text-info">Enter Destination</label>
             <input
               name="destination"
               onChange={this.onChange}
               type="text"
-              value={vacation.destination}
+              placeholder={vacation.destination}
             ></input>{" "}
             <br />
-            <label className="dateForm text-info">Edit Description</label>
+            <label className="dateForm text-info">Enter Description</label>
             <input
               name="description"
               onChange={this.onChange}
               type="text"
-              value={vacation.description}
+              placeholder={vacation.description}
             ></input>
           </div>
           <div className="card-body text-info">
             <h5 className="card-title text-center">
-              <label className="dateForm text-info">Edit Price</label>
+              <label className="dateForm text-info">Enter Price</label>
               <input
                 name="price"
                 onChange={this.onChange}
@@ -132,11 +131,11 @@ class EditVacationModal extends Component {
           </div>
           <div className="card-footer bg-transparent border-info text-center">
             <label className="dateForm text-info">
-              Edit From Date : {vacation.fromDate}
+              Date : {vacation.fromDate}
             </label>
             <input name="fromDate" onChange={this.onChange} type="date"></input>
             <label className="dateForm text-info">
-              Edit To Date : {vacation.toDate}
+              Date : {vacation.toDate}
             </label>
             <input name="toDate" onChange={this.onChange} type="date"></input>
             <div className="row mt-3">

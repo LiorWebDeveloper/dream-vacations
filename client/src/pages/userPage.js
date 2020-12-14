@@ -43,12 +43,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    SetVacation(value) {
-      dispatch({
-        type: "SetVacation",
-        payload: value,
-      });
-    },
     updateLogInUsers(value) {
       dispatch({
         type: "SetLoggedInUser",

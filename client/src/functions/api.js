@@ -60,7 +60,6 @@ export const updateVacation = async (obj) => {
       vacations = response.data;
     })
     .catch((error) => {
-      console.log("addVactionModal -> error", error);
       alert(
         "There is a problem with the server, the vacation was not added. Please try again later"
       );
@@ -102,9 +101,7 @@ export const callToServerDeleteVacation = async (id) => {
 /* this fun call to server and inser vacation to follow */
 export const callToServerAddOrDeleteFavoriteVacation = async (obj, url) => {
   await Axios.post(url, obj)
-    .then((response) => {
-      console.log(response.data);
-    })
+    .then((response) => {})
     .catch((error) => {
       console.log("addVactionModal -> error", error);
       alert(

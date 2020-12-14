@@ -8,10 +8,10 @@ const sequelize = new Sequelize("dream_vacation", "root", "", {
 
 sequelize.sync().then(
   function () {
-    //console.log("Connected DB !!")
+    console.log("Connected DB !!");
   },
   function (err) {
-    //  console.log("Error connected DB !!", err)
+    console.log("Error connected DB !!", err);
   }
 );
 
