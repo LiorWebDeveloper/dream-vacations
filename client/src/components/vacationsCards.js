@@ -18,8 +18,8 @@ class VacationsCards extends Component {
   }
 
   componentDidMount = async () => {
-    await this.getLoacalStorage();
-    await this.getAllVacation(this.state.userId);
+    await this.getUserId();
+    await this.getAllVacations(this.state.userId);
     this.setState({ vacations: this.props.vacations });
     this.markFollowOnFollowVacationsOnLoad();
     this.socket = socketIOClient(Settings.soketUrl);
@@ -67,19 +67,22 @@ class VacationsCards extends Component {
     this.socket.emit("follows vacation", followsVacation);
   };
 
-  getLoacalStorage = () => {
-    let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
-    if (userFromLoaclStorah != null) {
-      this.setState({
-        userId: userFromLoaclStorah.id,
-      });
-      this.props.updateLogInUsers(userFromLoaclStorah);
+  /* this fun get the use id number  on first load the user id came from redux, after it is came from the loxal storag */
+  getUserId = () => {
+    if (this.props.loggedInUser != null)
+      this.setState({ userId: this.props.loggedInUser.id });
+    else {
+      let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
+      if (userFromLoaclStorah != null)
+        this.setState({
+          userId: userFromLoaclStorah.id,
+        });
     }
   };
 
   /* this fun get all vacations from server and update the reducer */
-  getAllVacation = async (userId) => {
-    let vacations = await Api.getAllVacation(userId);
+  getAllVacations = async (userId) => {
+    let vacations = await Api.getAllVacations(userId);
     this.setState({ vacations: vacations });
     this.props.SetVacation(vacations);
   };
@@ -197,7 +200,8 @@ class VacationsCards extends Component {
           >
             {tools}
             <div className="card-header bg-transparent border-info text-center cardTitle">
-              {vacation.destination} <br /> {vacation.description}
+              <span className="cardDestination"> {vacation.destination}</span>{" "}
+              <br /> {vacation.description}
             </div>
             <div className="card-body text-info">
               <h5 className="card-title text-center">

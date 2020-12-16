@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "../addVacationModal.css";
 import AddVacationModal from "../components/addVactionModal";
 import VacationCards from "../components/vacationsCards";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Admin extends Component {
   state = {

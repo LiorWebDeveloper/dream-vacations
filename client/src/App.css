@@ -105,9 +105,15 @@
 }
 
 .cardTitle {
-  font-size: 1.1rem;
-  font-weight: 800;
+  font-size: 1.2rem;
+  font-weight: bold;
   padding-top: 1px;
+}
+.cardDestination {
+  font-weight: 800;
+  font-size: 1.3rem;
+  color: rgb(2, 40, 81);
+  text-decoration: underline;
 }
 
 .imageCard {

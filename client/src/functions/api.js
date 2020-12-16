@@ -36,7 +36,7 @@ export const createNewUser = async (obj) => {
 };
 
 /* this fun call to server send to server to get all vactions */
-export const getAllVacation = async (userId) => {
+export const getAllVacations = async (userId) => {
   try {
     await Axios.get(
       `${Settings.GlobalURL}vacations/getAllVacations?userId=${userId}`

@@ -12,9 +12,8 @@ class UserPage extends Component {
   /* this fun for set the uesr un the local storage */
   getLoacalStorage = () => {
     let userFromLoaclStorah = JSON.parse(localStorage.getItem("currentUser"));
-    if (userFromLoaclStorah != null) {
+    if (userFromLoaclStorah != null)
       this.props.updateLogInUsers(userFromLoaclStorah);
-    }
   };
 
   render() {
