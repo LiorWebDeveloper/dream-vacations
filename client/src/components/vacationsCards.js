@@ -194,23 +194,21 @@ class VacationsCards extends Component {
       let image = `${Settings.GlobalURL}uploads/${vacation.picture}`;
       return (
         <div key={i} className="col-xl-4 col-md-6">
-          <div
-            key={i}
-            className="card text-info border-info my-2 mx-1 vacationCard"
-          >
+          <div key={i} className="card  my-2 mx-1 vacationCard">
             {tools}
-            <div className="card-header bg-transparent border-info text-center cardTitle">
-              <span className="cardDestination"> {vacation.destination}</span>{" "}
-              <br /> {vacation.description}
+            <div className="card-header bg-transparent  text-center cardTitle">
+              <span className="cardDestination"> {vacation.destination}</span>
+              <br />
+              <span className="cardsDes"> {vacation.description} </span>
             </div>
-            <div className="card-body text-info">
-              <h5 className="card-title text-center">
+            <div className="card-body">
+              <h4 className="card-title text-center">
                 Only: {vacation.price}$
-              </h5>
+              </h4>
               <img className="imageCard" src={image}></img>
-            </div>
-            <div className="card-footer bg-transparent border-info text-center">
-              From: {vacation.fromDate} <br /> To: {vacation.toDate}
+              <div className="pt-3 bg-transparent  text-center">
+                From: {vacation.fromDate} <br /> To: {vacation.toDate}
+              </div>
             </div>
           </div>
         </div>

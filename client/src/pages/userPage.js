@@ -26,7 +26,7 @@ class UserPage extends Component {
     };
     direction();
     return (
-      <div>
+      <div id="userWarp">
         {pageDirection}
         <VacationCards />
       </div>

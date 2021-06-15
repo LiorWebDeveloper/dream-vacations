@@ -1,5 +1,5 @@
 * {
-  font-size: 28px;
+  font-size: 22px;
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   margin-top: 1px;
@@ -23,17 +23,17 @@
 }
 
 #hedaerText h1 {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-family: Candara;
 }
 
 #hedaerText h2 {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: Monaco;
 }
 
 #userName {
-  font-size: 0.6rem;
+  font-size: 0.8rem;
   color: rgb(255, 125, 45);
   text-decoration: none;
 }
@@ -93,9 +93,14 @@
 }
 
 /* from here below it is vacationCard.js components */
-
+#userWarp {
+  background-image: url("https://cdn.babamail.co.il/Files/2012/7/16/09b4e353-1e13-4d7a-a621-25b32ce6bb27.jpg");
+}
 .vacationCard {
-  background-color: #a39d9da1;
+  background-color: gainsboro;
+  border-radius: 10px;
+  box-shadow: 8px 8px 10px black;
+  min-height: 500px;
 }
 
 .vacationCard:nth-child(2n + 2) {
@@ -110,18 +115,23 @@
   padding-top: 1px;
 }
 .cardDestination {
-  font-weight: 800;
+  font-weight: 700;
   font-size: 1.3rem;
-  color: rgb(2, 40, 81);
+  color: rgba(211, 94, 21, 0.801);
   text-decoration: underline;
 }
 
+.cardsDes {
+  font-weight: 100;
+  font-size: 1.1rem;
+}
+
 .imageCard {
-  margin-left: 2.5%;
-  width: 95%;
-  height: 250px;
+  margin-left: 7.5%;
+  width: 85%;
+  height: 150px;
   border: 1px rgb(2, 40, 81) solid;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .userTools {
@@ -175,7 +185,7 @@
 }
 
 #footerWrapper span {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
 }
 
 .addAndEditModel {
